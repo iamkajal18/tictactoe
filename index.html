@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+      *{
+    margin:0;
+    padding:1;
+}
+
+body{
+  background-color:darksalmon;
+  text-align: center;
+}
+
+.container{
+    height:70vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+.game{
+     height:60vmin;
+     width:60vmin;
+     display:flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     align-items: center;
+     gap:1.5vmin;
+}
+.box{
+    height:18vmin;
+    width:18vmin;
+    border-radius:1rem;
+    border:none;
+    font-size: 15vmin;
+    color:crimson;
+    background-color:gray;
+} 
+.reset-btn{
+    padding:1rem;
+    font-size: 0.9rem;
+    background-color: black;
+    color:white;
+    height: 40px;
+    width:100px;
+    text-align: center;
+    border-radius:1rem;
+}
+.winningMsg{
+    
+    color:teal;
+    
+}
+    </style>
+</head>
+  <body>
+    <main>
+    <h1>Tic Tac Toe </h1>
+    <div>
+      <h2 class="winningMsg"></h2>
+      
+      </div>
+      
+       <div class="container">
+            <div class="game">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+             </div>
+        </div>
+        
+    </main>
+    <!-- <script src="app.js"> -->
+      <script> 
+      let boxes = document.querySelectorAll(".box");
+let winningMsg=document.querySelector(".winningMsg");
+
+
+let turnO=true;
+let flag;
+const winPatterns = [
+    [0,1,2] ,[0,3,6], [6,7,8],[2,5,8],
+    [1,4,7],[0,4,8],[2,4,6],[3,4,5],
+];
+
+boxes.forEach((box)=>{
+    box.addEventListener("click",()=>{
+        
+        if(turnO)
+        {   box.style .color="black";
+            box.innerText ="O";
+            turnO =false;
+        }
+        else{
+            box.style.color="white";
+            box.innerText = "X";
+            turnO =true; 
+        }
+        box.disabled = true;  
+
+        checkWinner();
+    });
+});
+
+const disableBoxes=()=>{
+    for (let box of boxes){
+        box.disabled=true;
+    }
+    
+}
+const showWinner=(winner)=>{
+    winningMsg.innerText=` Congratulation !! 🥇 ${winner} is Winner `;
+    disableBoxes();
+    };
+const checkWinner=()=>{
+    for(let pattern of winPatterns){
+    let pos1=boxes[pattern[0]].innerText;
+    let pos2=boxes[pattern[1]].innerText;
+    let pos3=boxes[pattern[2]].innerText;
+    if(pos1!=""  && pos2!="" &&pos3!=""){
+        if(pos1===pos2 && pos2===pos3){
+            flag=true;
+        }
+        if(flag){
+            console.log("Winner",pos1);
+            disableBoxes();
+            showWinner(pos1);
+        } 
+    }
+  }
+};
+
+    </script>
+  </body>
+</html>
